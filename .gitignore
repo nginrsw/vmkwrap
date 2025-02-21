@@ -1,5 +1,7 @@
 # Compiled Lua sources
 luac.out
+vmk.out
+vmk
 
 # luarocks build files
 *.src.rock
@@ -39,3 +41,7 @@ luac.out
 *.x86_64
 *.hex
 
+#misc
+*#*#
+#*#
+*~
