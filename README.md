@@ -4,6 +4,9 @@ VMKWrap is an automatic transpiler that converts **VMK to Lua**, runs it using
 **LuaJIT**, and then converts it back to **VMK**. It allows seamless execution
 of VMK code, making it useful for anything using **LuaJIT**.
 
+## **⚠ Requirements**  
+VMKWrap requires **LuaJIT**. Make sure LuaJIT is installed; otherwise, this tool will not work.
+
 ## **📌 Features** 
 
 - ✅ Automatically transpiles **VMK → Lua** and back
