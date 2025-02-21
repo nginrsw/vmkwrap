@@ -13,9 +13,9 @@ of VMK code, making it useful for anything using **LuaJIT**.
 
 ---
 
-** Question: ** Why not just use the VMK interpreter or standard Lua?
+**Question:** Why not just use the VMK interpreter or standard Lua?
 
-** Answer:** This wrapper is actually designed for game engines, which commonly
+**Answer:** This wrapper is actually designed for game engines, which commonly
 rely on LuaJIT. If you need a wrapper for a different purpose or interpreter,
 feel free to modify this project locally.
 
