@@ -24,15 +24,15 @@ cd vmkwrap
 
 ### **2️⃣ Build the Project**  
 
-Run the following command to build VMKWrap and store it in `bin/`:
+Run the following command to build VMKWrap and **store it** in `bin/`:
 
 ```sh
 ./run.sh
 ```
 
-### **3️⃣ Run VMKWrap**  
+**VMKWrap** can be found in the bin/ folder.
 
-### **4️⃣ (Optional) Move Binary for Global Access**  
+### **3️⃣  Optional) Move Binary for Global Access**  
 
 To make `vmkwrap` accessible from anywhere:
 
@@ -51,4 +51,3 @@ vmkwrap main.vmk
 ## **📜 License** 
 
 This project is licensed under the [MIT License](LICENSE).
-
