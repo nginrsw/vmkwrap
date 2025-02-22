@@ -51,7 +51,7 @@ To make `vmkwrap` accessible from anywhere:
 sudo ln -s ~/username/your-dir/bin/vmkwrap /usr/local/bin/
 ```
 
-Then you can run it from any directory:
+Then you can run it from any directory in your terminal:
 
 ```sh
 vmkwrap main.vmk
