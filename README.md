@@ -35,13 +35,13 @@ cd vmkwrap
 
 ### **2️⃣ Build the Project**  
 
-Run the following command to build VMKWrap and **store it** in `bin/`:
+Run the following command to build VMKWrap which **stored** in `bin/`:
 
 ```sh
 ./run.sh
 ```
 
-**VMKWrap** can be found in the bin/ folder.
+**vmkwrap** can be found in the bin/ folder.
 
 ### **3️⃣ Optional: Move Binary for Global Access**  
 
