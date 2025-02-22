@@ -10,7 +10,7 @@ VMKWrap requires **LuaJIT**. Make sure LuaJIT is installed on your computer; oth
 ## **📌 Features** 
 
 - ✅ Automatically transpiles **VMK → Lua** and back
-- ✅ Runs Lua code using **LuaJIT**
+- ✅ Runs code using **LuaJIT**
 - ✅ Standalone binary, can be used anywhere
 - ✅ Simple one-command execution with `run.sh`
 
