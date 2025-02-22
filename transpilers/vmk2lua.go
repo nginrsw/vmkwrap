@@ -15,7 +15,7 @@ func TranspileVMKtoLua(rootDir string) error {
 			return err
 		}
 
-		// Pastikan ini bukan direktori dan file berakhiran .vmk
+		// Make sure not a directory and file ending in .vmk
 		if !info.IsDir() && strings.HasSuffix(path, ".vmk") {
 			err := convertVMKtoLua(path)
 			if err != nil {
@@ -38,14 +38,14 @@ func convertVMKtoLua(filePath string) error {
 	content = regexp.MustCompile(`\bfn\b`).ReplaceAll(content, []byte("function"))
 	content = regexp.MustCompile(`\bstr\.`).ReplaceAll(content, []byte("string."))
 
-	// Simpan sebagai .lua file
+	// Save as .lua file
 	luaFilePath := strings.Replace(filePath, ".vmk", ".lua", 1)
 	err = os.WriteFile(luaFilePath, content, 0644)
 	if err != nil {
 		return err
 	}
 
-	// Hapus file .vmk yang lama
+	// Delete the old .vmk file
 	err = os.Remove(filePath)
 	if err != nil {
 		return err

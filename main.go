@@ -10,10 +10,10 @@ import (
 )
 
 func main() {
-	// Gunakan "." sebagai root directory agar semua file di direktori saat ini & subfolder ikut diproses
+	// Use "." As a root directory, all files in the current directory & subfolder are processed
 	rootDir := "."
 
-	// 1. Transpile VMK → Lua untuk semua file
+	// 1. Transpile VMK → Lua for all files
 	fmt.Println("Transpiling VMK → Lua...")
 	err := transpilers.TranspileVMKtoLua(rootDir)
 	if err != nil {
@@ -21,7 +21,7 @@ func main() {
 		return
 	}
 
-	// 2. Jalankan semua file .lua yang ditemukan di rootDir
+	// 2. Run all. Lua files found in rootdir
 	fmt.Println("Running LuaJIT...")
 	err = runLuaJIT(rootDir)
 	if err != nil {
@@ -29,7 +29,7 @@ func main() {
 		return
 	}
 
-	// 3. Reverse transpile Lua → VMK untuk semua file
+	// 3. Reverse Transpile Lua → VMK for all files
 	fmt.Println("Reversing Lua → VMK...")
 	err = transpilers.ReverseLuaToVMK(rootDir)
 	if err != nil {
@@ -40,14 +40,14 @@ func main() {
 	fmt.Println("Process complete!")
 }
 
-// runLuaJIT menjalankan semua file .lua dalam rootDir menggunakan LuaJIT
+// runLuaJIT runs all .lua files in rootDir using LuaJIT
 func runLuaJIT(rootDir string) error {
 	luajitPath, err := exec.LookPath("luajit")
 	if err != nil {
 		return fmt.Errorf("LuaJIT not found. Make sure it is installed and accessible.")
 	}
 
-	// Cari semua file .lua dalam rootDir dan jalankan satu per satu
+	// Search for all .lua files in rootDir and run them one by one
 	err = filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err

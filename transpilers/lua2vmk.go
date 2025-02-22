@@ -15,7 +15,7 @@ func ReverseLuaToVMK(rootDir string) error {
 			return err
 		}
 
-		// Pastikan ini bukan direktori dan file berakhiran .lua
+		// Make sure not a directory and file ending in .lua
 		if !info.IsDir() && strings.HasSuffix(path, ".lua") {
 			err := reverseConvertFile(path)
 			if err != nil {
@@ -38,14 +38,14 @@ func reverseConvertFile(filePath string) error {
 	content = regexp.MustCompile(`\bfunction\b`).ReplaceAll(content, []byte("fn"))
 	content = regexp.MustCompile(`\bstring\.`).ReplaceAll(content, []byte("str."))
 
-	// Simpan sebagai .vmk file
+	// Save as .vmk file
 	vmkFilePath := strings.Replace(filePath, ".lua", ".vmk", 1)
 	err = os.WriteFile(vmkFilePath, content, 0644)
 	if err != nil {
 		return err
 	}
 
-	// Hapus file .lua yang lama
+	// Delete the old .lua files
 	err = os.Remove(filePath)
 	if err != nil {
 		return err
