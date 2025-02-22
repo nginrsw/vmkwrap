@@ -43,7 +43,7 @@ Run the following command to build VMKWrap which **stored** in `bin/`:
 
 **vmkwrap** can be found in the bin/ folder.
 
-### **3️⃣ Optional: Move Binary for Global Access**  
+### **3️⃣ Optional: Create symlink for Global Access**  
 
 To make `vmkwrap` accessible from anywhere:
 
