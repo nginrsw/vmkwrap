@@ -18,7 +18,7 @@ VMKWrap requires **LuaJIT**. Make sure LuaJIT is installed on your computer; oth
 
 **Question:** Why not just use the VMK interpreter or standard Lua?
 
-**Answer:** This tool is actually designed for game engines, which commonly
+**Answer:** This tool is actually designed for `lua` game engines, which commonly
 rely on LuaJIT. If you need a tool for a different purpose or interpreter,
 feel free to modify this project locally.
 
