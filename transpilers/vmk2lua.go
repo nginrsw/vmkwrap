@@ -2,34 +2,55 @@ package transpilers
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
 
-// Transpile VMK to Lua changes the .vmk file to .lua
-func TranspileVMKtoLua(filePath string) (string, error) {
-	if !strings.HasSuffix(filePath, ".vmk") {
-		return "", fmt.Errorf("invalid file type: %s", filePath)
-	}
+// TranspileVMKtoLua converts all .vmk files in a directory (including subdirectories) to .lua
+func TranspileVMKtoLua(rootDir string) error {
+	return filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
-	content, err := ioutil.ReadFile(filePath)
+		// Pastikan ini bukan direktori dan file berakhiran .vmk
+		if !info.IsDir() && strings.HasSuffix(path, ".vmk") {
+			err := convertVMKtoLua(path)
+			if err != nil {
+				fmt.Printf("Failed to convert %s: %v\n", path, err)
+			}
+		}
+		return nil
+	})
+}
+
+// convertVMKtoLua handles individual file conversion (VMK → Lua)
+func convertVMKtoLua(filePath string) error {
+	content, err := os.ReadFile(filePath)
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	// Change VMK Keywords with Lua
+	// Replace VMK keywords with Lua equivalents
 	content = regexp.MustCompile(`\block\b`).ReplaceAll(content, []byte("local"))
 	content = regexp.MustCompile(`\bfn\b`).ReplaceAll(content, []byte("function"))
-	content = regexp.MustCompile(`\bstr.\b`).ReplaceAll(content, []byte("string."))
+	content = regexp.MustCompile(`\bstr\.`).ReplaceAll(content, []byte("string."))
 
-	// Save as a .lua file
+	// Simpan sebagai .lua file
 	luaFilePath := strings.Replace(filePath, ".vmk", ".lua", 1)
-	err = ioutil.WriteFile(luaFilePath, content, 0644)
+	err = os.WriteFile(luaFilePath, content, 0644)
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	fmt.Println("Transpile VMK → Lua complete!")
-	return luaFilePath, nil
+	// Hapus file .vmk yang lama
+	err = os.Remove(filePath)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Converted:", filePath, "→", luaFilePath)
+	return nil
 }

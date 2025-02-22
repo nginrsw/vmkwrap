@@ -2,38 +2,55 @@ package transpilers
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
 
-// Reverse Lua to VMK returns the .lua file to .vmk
-func ReverseLuaToVMK(filePath string) error {
-	if !strings.HasSuffix(filePath, ".lua") {
-		return fmt.Errorf("invalid file type: %s", filePath)
-	}
+// ReverseLuaToVMK converts all .lua files in a directory (including subdirectories) to .vmk
+func ReverseLuaToVMK(rootDir string) error {
+	return filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
-	content, err := ioutil.ReadFile(filePath)
+		// Pastikan ini bukan direktori dan file berakhiran .lua
+		if !info.IsDir() && strings.HasSuffix(path, ".lua") {
+			err := reverseConvertFile(path)
+			if err != nil {
+				fmt.Printf("Failed to convert %s: %v\n", path, err)
+			}
+		}
+		return nil
+	})
+}
+
+// reverseConvertFile handles individual file conversion (Lua → VMK)
+func reverseConvertFile(filePath string) error {
+	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
 
-	// return the keyword lua to VMK
+	// Replace Lua keywords with VMK equivalents
 	content = regexp.MustCompile(`\blocal\b`).ReplaceAll(content, []byte("lock"))
 	content = regexp.MustCompile(`\bfunction\b`).ReplaceAll(content, []byte("fn"))
-	content = regexp.MustCompile(`\bstring.\b`).ReplaceAll(content, []byte("str."))
+	content = regexp.MustCompile(`\bstring\.`).ReplaceAll(content, []byte("str."))
 
-	// Save as a .vmk file
+	// Simpan sebagai .vmk file
 	vmkFilePath := strings.Replace(filePath, ".lua", ".vmk", 1)
-	err = ioutil.WriteFile(vmkFilePath, content, 0644)
+	err = os.WriteFile(vmkFilePath, content, 0644)
 	if err != nil {
 		return err
 	}
 
-	// Delete the .lua file after completion of reverse transpile
-	os.Remove(filePath)
+	// Hapus file .lua yang lama
+	err = os.Remove(filePath)
+	if err != nil {
+		return err
+	}
 
-	fmt.Println("Reverse Lua → VMK complete!")
+	fmt.Println("Converted:", filePath, "→", vmkFilePath)
 	return nil
 }

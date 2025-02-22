@@ -2,6 +2,7 @@
 luac.out
 vmk.out
 vmk
+vmkwrap
 
 # luarocks build files
 *.src.rock
@@ -40,6 +41,9 @@ vmk
 *.i*86
 *.x86_64
 *.hex
+
+# Backup files
+*.go.bak
 
 #misc
 *#*#
